@@ -1,17 +1,30 @@
 <template>
   <nav>
-    <ul>
-      <li><Link href="/">Home</Link></li>
-      <li><Link href="/users">Users</Link></li>
-      <li><Link href="/settings">Settings</Link></li>
+    <ul class="flex space-x-6">
+      <li>
+        <NavLink href="/" :active="$page.component === 'Home'">
+          Home
+        </NavLink>
+      </li>
+
+      <li>
+        <NavLink href="/users" :active="$page.component === 'Users'">
+          Users
+        </NavLink>
+      </li>
+
+      <li>
+        <NavLink href="/settings" :active="$page.component === 'Settings'">
+          Settings
+        </NavLink>
+      </li>
     </ul>
   </nav>
 </template>
 
 <script>
-import { Link } from '@inertiajs/inertia-vue3';
-
+import NavLink from "./NavLink.vue";
 export default {
-  components: { Link },
+  components: { NavLink },
 };
 </script>

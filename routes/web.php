@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Models\User;
 
 
 /*
@@ -16,15 +17,25 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome',[
-        'name'=>'Ameerali C',
-        'frameworks' => [
-            'laravel',
-            'vue',
-            'inertia'
-        ]
-    ]);
-});
-Route::get('/home', function () {
     return Inertia::render('Home');
+});
+
+Route::get('/users', function () {
+    return Inertia::render('Users',[
+        'users' => User::all()->map(fn($user)=>[
+            'name' => $user->name
+    ])
+    ]);
+    // return Inertia::render('Users',[
+    //     'time'=> now()->toTimeString()
+    // ]);
+});
+
+Route::get('/settings', function () {
+    return Inertia::render('Settings');
+});
+
+Route::post('/logout', function () {
+    dd(request('foo'));
+    // return Inertia::render('Settings');
 });
