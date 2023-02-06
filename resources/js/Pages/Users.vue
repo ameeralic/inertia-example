@@ -1,8 +1,12 @@
 <template>
-  <Head title="Users" />
-    <h1 class="text-3xl">Users</h1>
 
-    <div class="flex flex-col">
+  <Head title="Users" />
+  <div class="flex justify-between mb-6">
+    <h1 class="text-3xl"> Users </h1>
+    <input type="text" v-model="search" placeholder="Search.." class="border px-2 rounded-lg">
+  </div>
+
+  <div class="flex flex-col">
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
@@ -21,7 +25,7 @@
 
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <Link :href="`/users/${user.id}/edit`" class="text-indigo-600 hover:text-indigo-900">
-                    Edit
+                  Edit
                   </Link>
                 </td>
               </tr>
@@ -34,8 +38,8 @@
 
   <Pagination :links="users.links" class="mt-6" />
 
-    <!-- time and refresh button - showing prevent scrolling on load -->
-    <!-- <div style="margin-top: 400px">
+  <!-- time and refresh button - showing prevent scrolling on load -->
+  <!-- <div style="margin-top: 400px">
         <p>The current time is {{ time }}.</p>
 
         <div style="margin-top: 400px">
@@ -52,7 +56,24 @@
 </template>
 
 <script setup>
+import { ref, watch } from "vue";
 import Pagination from "../Shared/Pagination.vue";
-defineProps({ users: Object });
+import { router } from "@inertiajs/vue3";
+
+let props = defineProps({ users: Object, filters: Object });
 // defineProps(['time'])
+let search = ref(props.filters.search)
+
+watch(search, value => {
+  router.get(
+    '/users',
+    {
+      search: value
+    },
+    {
+      preserveState: true,
+      replace: true
+    }
+  )
+})
 </script>
