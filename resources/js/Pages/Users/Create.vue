@@ -20,9 +20,16 @@
                 id="name"
                 required
             />
-            <div
+            <!-- <div
                 v-if="errors.name"
                 v-text="errors.name"
+                class="text-red-500 text-xs mt-1"
+            ></div> -->
+
+            <!-- using useForm on Inertia -->
+            <div
+                v-if="form.errors.name"
+                v-text="form.errors.name"
                 class="text-red-500 text-xs mt-1"
             ></div>
         </div>
@@ -44,9 +51,16 @@
                 required
             />
 
-            <div
+            <!-- <div
                 v-if="errors.email"
                 v-text="errors.email"
+                class="text-red-500 text-xs mt-1"
+            ></div> -->
+
+            <!-- using useForm on Inertia -->
+            <div
+                v-if="form.errors.email"
+                v-text="form.errors.email"
                 class="text-red-500 text-xs mt-1"
             ></div>
         </div>
@@ -65,11 +79,18 @@
                 type="password"
                 name="password"
                 id="password"
-                required
+
             />
-            <div
+            <!-- <div
                 v-if="errors.password"
                 v-text="errors.password"
+                class="text-red-500 text-xs mt-1"
+            ></div> -->
+
+            <!-- using useForm on Inertia -->
+            <div
+                v-if="form.errors.password"
+                v-text="form.errors.password"
                 class="text-red-500 text-xs mt-1"
             ></div>
         </div>
@@ -77,6 +98,7 @@
         <div class="mb-6">
             <button
                 type="submit"
+                :disabled="form.processing"
                 class="bg-blue-400 text-white rounded py-2 px-4 hover:bg-blue-500"
             >
                 Submit
@@ -85,19 +107,31 @@
     </form>
 </template>
 <script setup>
-import { router } from "@inertiajs/vue3";
-import { reactive } from "vue";
+// import { router } from "@inertiajs/vue3";
+// import { reactive } from "vue";
 
-defineProps({
-    errors: Object,
-});
+// defineProps({
+//     errors: Object,
+// });
 
-let form = reactive({
+// let form = reactive({
+//     name: "",
+//     email: "",
+//     password: "",
+// });
+// let submit = () => {
+//     router.post("/users", form);
+// };
+
+// Using Inertia form
+import { useForm } from "@inertiajs/vue3";
+
+let form = useForm({
     name: "",
     email: "",
     password: "",
 });
 let submit = () => {
-    router.post("/users", form);
+    form.post("/users");
 };
 </script>
